@@ -1,0 +1,99 @@
+CREATE TABLE Country(
+  country VARCHAR(25) PRIMARY KEY,
+  currency VARCHAR(25),
+  visaRequired CHAR(1),
+  CONSTRAINT chkVisa CHECK (visaRequired In ('Y', 'N'))
+);
+
+CREATE TABLE City(
+  city VARCHAR(25) PRIMARY KEY,
+  country VARCHAR(25),
+  FOREIGN KEY (country) REFERENCES Country(country)
+);
+
+CREATE TABLE Site(
+  name VARCHAR(25) PRIMARY KEY,
+  city VARCHAR(25),
+  category VARCHAR(15),
+  FOREIGN KEY (city) REFERENCES City(city),
+  CONSTRAINT chkCategory  CHECK (category In('museum', 'park', 'ride', 'architecture', 'food and drink'))
+);
+
+CREATE TABLE User(
+  name VARCHAR(25) PRIMARY KEY,
+  email VARCHAR(25)  
+);
+
+CREATE TABLE Visit(
+  name VARCHAR(25),
+  siteName VARCHAR(25),
+  rating int,
+  FOREIGN KEY (name) REFERENCES User(name),
+  FOREIGN KEY (siteName) REFERENCES Site(name),
+  CONSTRAINT chkRating CHECK(rating >= 0 AND rating <= 5)
+);
+
+INSERT INTO Country VALUES('Scotland', 'Pound', 'N');                   
+INSERT INTO Country VALUES('England', 'Pound', 'Y');                                 
+INSERT INTO Country VALUES('France', 'Euro', 'N');                                 
+INSERT INTO Country VALUES('Germany', 'Euro', 'Y');                                 
+INSERT INTO Country VALUES('Spain', 'Euro', 'N');
+                                 
+INSERT INTO City VALUES('Edinburgh', 'Scotland');                                 
+INSERT INTO City VALUES('Glasgow', 'Scotland');                                 
+INSERT INTO City VALUES('London', 'England');                                 
+INSERT INTO City VALUES('York', 'England');                                 
+INSERT INTO City VALUES('Paris', 'France');                                 
+INSERT INTO City VALUES('Lyon', 'France');                                 
+INSERT INTO City VALUES('Berlin', 'Germany');                                 
+INSERT INTO City VALUES('Munich', 'Germany');                                 
+INSERT INTO City VALUES('Madrid', 'Spain');                                 
+INSERT INTO City VALUES('Barcelona', 'Spain');                                 
+        
+INSERT INTO Site VALUES('Museum of Edinburgh', 'Edinburgh', 'museum');                                 
+INSERT INTO Site VALUES('The Kitchin', 'Edinburgh', 'food and drink');                                 
+INSERT INTO Site VALUES('Pollock Country Park', 'Glasgow', 'park');                                 
+INSERT INTO Site VALUES('Scotlands Theme Park', 'Glasgow', 'ride');                                 
+INSERT INTO Site VALUES('Tower Bridge', 'London', 'architecture');                                 
+INSERT INTO Site VALUES('Museum of London', 'London', 'museum');                                 
+INSERT INTO Site VALUES('Rowntree Park', 'York', 'park');                                 
+INSERT INTO Site VALUES('The Park Restaurant', 'York', 'food and drink');                                 
+INSERT INTO Site VALUES('Louvre', 'Paris', 'museum');                                 
+INSERT INTO Site VALUES('Eiffel Tower', 'Paris', 'architecture');                                 
+INSERT INTO Site VALUES('Burgundy Lounge', 'Lyon', 'food and drink');                                 
+INSERT INTO Site VALUES('Boomerang', 'Lyon', 'ride');                                 
+INSERT INTO Site VALUES('Mauer Park', 'Berlin', 'park');                                 
+INSERT INTO Site VALUES('The Reichstag', 'Berlin', 'architecture');                                 
+INSERT INTO Site VALUES('Tantris Restaurant', 'Munich', 'food and drink');                                 
+INSERT INTO Site VALUES('Chopan Shwabing', 'Munich', 'food and drink');                                 
+INSERT INTO Site VALUES('Museo Nacional del Prado', 'Madrid', 'museum');                                 
+INSERT INTO Site VALUES('Tornado', 'Madrid', 'ride');                                 
+INSERT INTO Site VALUES('Park Guell', 'Barcelona', 'park');                                 
+INSERT INTO Site VALUES('Ciutadella Park', 'Barcelona', 'park');                                 
+                                 
+INSERT INTO User VALUES('John Smith', 'jsmith23@gmail.com');                                 
+INSERT INTO User VALUES('Jane Doe', 'janed10@hotmail.com');                                 
+INSERT INTO User VALUES('Ben Whyte', 'bw1990@gmail.com');                                 
+INSERT INTO User VALUES('Judith Wilson', 'judwil@hotmail.com');                                 
+INSERT INTO User VALUES('Luke Clark', 'lukeclark100@gmail.com');                                 
+                                 
+INSERT INTO Visit VALUES('John Smith', 'Museum of Edinburgh', '5');                                 
+INSERT INTO Visit VALUES('John Smith', 'The Kitchin', '2');                                 
+INSERT INTO Visit VALUES('John Smith', 'Pollock Country Park', '3');                                 
+INSERT INTO Visit VALUES('John Smith', 'Scotlands Theme Park', '1');                                 
+INSERT INTO Visit VALUES('Jane Doe', 'Tower Bridge', '4');                                 
+INSERT INTO Visit VALUES('Jane Doe', 'Boomerang', '1');                                  
+INSERT INTO Visit VALUES('Jane Doe', 'Museo Nacional del Prado', '2');                                  
+INSERT INTO Visit VALUES('Jane Doe', 'The Park Restaurant', '5');                                  
+INSERT INTO Visit VALUES('Ben Whyte', 'Louvre', '1');                                  
+INSERT INTO Visit VALUES('Ben Whyte', 'Museum of Edinburgh', '3');                                  
+INSERT INTO Visit VALUES('Ben Whyte', 'Burgundy Lounge', '3');                                  
+INSERT INTO Visit VALUES('Ben Whyte', 'The Kitchin', '1');                                  
+INSERT INTO Visit VALUES('Judith Wilson', 'Mauer Park', '5');                                  
+INSERT INTO Visit VALUES('Judith Wilson', 'Scotlands Theme Park', '1');                                  
+INSERT INTO Visit VALUES('Judith Wilson', 'Tantris Restaurant', '4');                                 
+INSERT INTO Visit VALUES('Judith Wilson', 'Chopan Shwabing', '4');                                 
+INSERT INTO Visit VALUES('Luke Clark', 'Museo Nacional del Prado', '2');                                 
+INSERT INTO Visit VALUES('Luke Clark', 'The Park Restaurant', '2');                                 
+INSERT INTO Visit VALUES('Luke Clark', 'Burgundy Lounge', '4');                                 
+INSERT INTO Visit VALUES('Luke Clark', 'Ciutadella Park', '5');
